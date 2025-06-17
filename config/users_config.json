@@ -1,0 +1,29 @@
+{
+    "tasker_users": [{
+        "name": "Lucas",
+        "config": [{
+            "YouTube_play_speed_mode_01": "2.0",
+            "YouTube_play_speed_mode_02": "2.5",
+            "Extend_01": "enable",
+            "Extend_02": "disable",
+            "Extend_03": "disable",
+            "Extend_04": "disable",
+            "Extend_05": "disable",
+            "Extend_06": "disable",
+            "Extend_07": "disable"
+        }]
+    }, {
+        "name": "Other",
+        "config": [{
+            "YouTube_play_speed_mode_01": "1.5",
+            "YouTube_play_speed_mode_02": "2.0",
+            "Extend_01": "enable",
+            "Extend_02": "disable",
+            "Extend_03": "disable",
+            "Extend_04": "disable",
+            "Extend_05": "disable",
+            "Extend_06": "disable",
+            "Extend_07": "disable"
+        }]
+    }]
+}
