@@ -4,6 +4,7 @@
         "config": [{
             "YouTube_play_speed_mode_01": "2.0",
             "YouTube_play_speed_mode_02": "2.5",
+            "GC_09": "enable",
             "Extend_01": "enable",
             "Extend_02": "disable",
             "Extend_03": "disable",
@@ -17,6 +18,7 @@
         "config": [{
             "YouTube_play_speed_mode_01": "1.5",
             "YouTube_play_speed_mode_02": "2.0",
+            "GC_09": "disable",
             "Extend_01": "enable",
             "Extend_02": "disable",
             "Extend_03": "disable",
