@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="only light">
+
+<!-- Tasker 变量 -->
+<meta name="autotoolswebscreen" type="variablejs" id="sentence"  group="Text" label="句子" />
+<meta name="autotoolswebscreen" type="variablejs" id="response"  group="Text" label="响应" />
+<meta name="autotoolswebscreen" type="variablejs" id="translate" group="Text" label="翻译" />
+<meta name="autotoolswebscreen" type="variablejs" id="grammar"   group="Text" label="语法" />
+<meta name="autotoolswebscreen" type="variablejs" id="analyze"   group="Text" label="分析" />
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap" rel="stylesheet">
+
+<style>
+/* —— 布局与样式与前版一致 —— */
+body{margin:0;padding:0;overflow-x:hidden;background:#AED1E5;font-family:"Times New Roman","宋体",serif;}
+#textArea{width:100%;height:50vh;background:#f9f7e9;padding:10px 10px 1em;box-sizing:border-box;border:1px solid #ccc;overflow-y:auto;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;}
+#textArea.fullHeight{position:absolute;top:0;left:0;width:100%;height:100vh!important;z-index:500;justify-content:flex-start;padding-bottom:0;}
+#textContent{width:100%;white-space:pre-wrap;outline:none;direction:ltr;unicode-bidi:bidi-override;}
+.english{font-size:130%;color:#000;} .chinese{font-size:84.5%;color:#428646;font-family:"Noto Sans SC",sans-serif;} #textArea.fullHeight .english{font-size:105%;}
+pre.code-block{background:#f5f5f5;padding:10px;margin:0 0 1em 0;overflow-x:auto;font-family:monospace;}
+
+#buttonContainer{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;margin:10px 0 0;}
+.actionButton{padding:10px;font-size:16px;color:#fff;border:none;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+#translateButton{background:#ff4248;}  /* 翻译 */
+#grammarButton  {background:#00cadd;}  /* 语法 */
+#sendButton     {background:#ffc109;color:#fff;} /* 发送（上移到第 1 行第 3 列）*/
+#clearButton    {background:#9c27b0;}  /* 清空 */
+#copyButton     {background:#ef5351;}  /* 复制 */
+#analyzeButton  {background:#3cb55b;}  /* 分析（下移到第 2 行第 3 列）*/
+
+#returnButton{position:fixed;display:none;color:#fff;background:#3cb55b;border:none;border-radius:8px;align-items:center;justify-content:center;cursor:pointer;z-index:1001;}
+</style>
+</head>
+
+<body>
+  <div id="textArea"><div id="textContent" contenteditable="true"></div></div>
+
+  <div id="buttonContainer">
+    <!-- 第 1 行：翻译 | 语法 | 发送 -->
+    <button id="translateButton" class="actionButton">翻译</button>
+    <button id="grammarButton"   class="actionButton">语法</button>
+    <button id="sendButton"      class="actionButton">发送</button>
+
+    <!-- 第 2 行：清空 | 复制 | 分析 -->
+    <button id="clearButton"     class="actionButton">清空</button>
+    <button id="copyButton"      class="actionButton">复制</button>
+    <button id="analyzeButton"   class="actionButton">分析</button>
+  </div>
+  <button id="returnButton">返回</button>
+
+<script>
+/* ---------- 工具 ---------- */
+const vibrate=()=>navigator.vibrate?.(30);
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+const sanitize=t=>(!t||t==='%Dialog_sentence'||t==='%Dialog_response')?'':t;
+
+/* ---------- 状态 ---------- */
+let currSentence=sanitize(window.sentence);
+let currResp=sanitize(window.response);
+const prefixes={translate:window.translate||'',grammar:window.grammar||'',analyze:window.analyze||''};
+
+/* ---------- DOM ---------- */
+const area=document.getElementById('textArea'), tc=document.getElementById('textContent');
+const tBtn=document.getElementById('translateButton'), gBtn=document.getElementById('grammarButton'), aBtn=document.getElementById('analyzeButton');
+const cBtn=document.getElementById('clearButton'), cpBtn=document.getElementById('copyButton'), sBtn=document.getElementById('sendButton');
+const back=document.getElementById('returnButton');
+
+/* ---------- 光标与滚动 ---------- */
+function caretPos(root){const sel=window.getSelection();if(!sel||!sel.rangeCount)return null;const r=sel.getRangeAt(0).cloneRange();r.selectNodeContents(root);r.setEnd(sel.focusNode,sel.focusOffset);return r.toString().length;}
+function setCaret(root,pos){const sel=window.getSelection();sel.removeAllRanges();const range=document.createRange();let cnt=0,stack=[root],n;while(stack.length){n=stack.pop();if(n.nodeType===3){const nxt=cnt+n.length;if(pos<=nxt){range.setStart(n,pos-cnt);range.collapse(true);sel.addRange(range);return;}cnt=nxt;}else for(let i=n.childNodes.length-1;i>=0;i--)stack.push(n.childNodes[i]);}}
+function focusEnd(){tc.focus();setCaret(tc,tc.innerText.length);}
+const bottom=()=>{if(!area.classList.contains('fullHeight'))area.scrollTop=area.scrollHeight;};
+
+/* ---------- 渲染 ---------- */
+const spanify=c=>c==='\n'?'<br>':(/[\u4e00-\u9fff]/.test(c)?`<span class="chinese">${esc(c)}</span>`:`<span class="english">${esc(c)}</span>`);
+function render(txt){tc.innerHTML=[...txt].map(spanify).join('');}
+
+/* ---------- 返回按钮对齐（改为依赖发送按钮） ---------- */
+function placeBack(){const r=sBtn.getBoundingClientRect();back.style.cssText=`top:${r.top}px;left:${r.left}px;width:${r.width}px;height:${r.height}px`;}
+window.addEventListener('resize',()=>{if(back.style.display==='flex')placeBack();});
+
+/* ---------- 视图切换 ---------- */
+function showFull(text){placeBack();back.style.display='flex';[tBtn,gBtn,aBtn,cBtn,cpBtn,sBtn].forEach(b=>b.style.display='none');area.classList.add('fullHeight');render(text);bottom();focusEnd();}
+function hideFull(){back.style.display='none';[tBtn,gBtn,aBtn,cBtn,cpBtn,sBtn].forEach(b=>b.style.display='flex');area.classList.remove('fullHeight');render(currSentence);bottom();focusEnd();}
+
+/* ---------- 初始 ---------- */
+render(currSentence);bottom();focusEnd();if(currResp)showFull(currResp);
+
+/* ---------- 发送 ---------- */
+function send(action,usePre=true){const raw=tc.innerText.replace(/\r/g,'');const enc=encodeURIComponent(raw);const req=encodeURIComponent((usePre?prefixes[action]:'')+raw);AutoTools.sendCommand(`data_dialog=:=${enc}=:=${req}=:=${action}`);currSentence=raw;currResp='';hideFull();}
+
+function pre_send(action,usePre=true){const raw=tc.innerText.replace(/\r/g,'');const enc=encodeURIComponent(raw);const req=encodeURIComponent((usePre?prefixes[action]:'')+"\n\n\n"+raw);AutoTools.sendCommand(`data_dialog=:=${enc}=:=${req}=:=${action}`);currSentence=raw;currResp='';hideFull();}
+
+function suf_send(action,usePre=true){const raw=tc.innerText.replace(/\r/g,'');const enc=encodeURIComponent(raw);const req=encodeURIComponent(raw+"\n\n\n"+(usePre?prefixes[action]:''));AutoTools.sendCommand(`data_dialog=:=${enc}=:=${req}=:=${action}`);currSentence=raw;currResp='';hideFull();}
+
+/* ---------- 按钮逻辑 ---------- */
+tBtn.onclick=()=>{vibrate();pre_send('translate');};
+gBtn.onclick=()=>{vibrate();pre_send('grammar');};
+aBtn.onclick=()=>{vibrate();suf_send('analyze');};
+sBtn.onclick=()=>{vibrate();send('send',false);};
+cBtn.onclick=()=>{vibrate();tc.innerText='';currSentence='';currResp='';hideFull();};
+cpBtn.onclick=()=>{vibrate();let txt=tc.innerText.replace(/\r/g,'').split('\n').map(l=>l.trim()).filter(Boolean).join('\n');txt=txt.replace(/[，。？！：；“”‘’（）]/g,m=>({'，':',','。':'.','？':'?','！':'!','：':':','；':';','“':'"','”':'"','‘':'\'','’':'\'','（':'(','）':')'})[m]);tc.innerText=txt;render(txt);bottom();focusEnd();send('copy',false);};
+back.onclick=()=>{vibrate();hideFull();};
+
+/* ---------- 输入事件 ---------- */
+function safe(){const pos=caretPos(tc),len=tc.innerText.length;render(tc.innerText);setCaret(tc,pos);if(pos===len)bottom();}
+['input','compositionend'].forEach(ev=>tc.addEventListener(ev,()=>setTimeout(safe,0)));
+tc.addEventListener('keydown',e=>{if(e.key==='Backspace')setTimeout(safe,0);});
+
+/* ---------- AutoTools 更新 ---------- */
+document.addEventListener('AutoToolsWebScreenUpdate',e=>{
+  if(!e.detail)return;
+  if(e.detail.id==='response'){currResp=sanitize(e.detail.value);currResp?showFull(currResp):hideFull();}
+  if(e.detail.id==='sentence'){currSentence=sanitize(e.detail.value);if(!area.classList.contains('fullHeight')){render(currSentence);bottom();focusEnd();}}
+});
+</script>
+</body>
+</html>
