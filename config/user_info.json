@@ -1,6 +1,7 @@
 {
     "Gesture_control_all_bar_names": "0_temp,01__,02__,03__,04__,05__,06__,07__,08__,09__,10__,gc__,test__,input_01,input_02,extend_01,extend_02,extend_03,extend_04,extend_05,extend_06,extend_07",
-    "ChatGPT_mode": "口语模式",
+    "ChatGPT_mode_speak_write": "口语模式",
+    "ChatGPT_mode_normal_temporary": "正常聊天",
     "tasker_users": [{
         "name": "Lucas",
         "config": [{
