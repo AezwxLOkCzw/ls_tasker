@@ -4,9 +4,9 @@
         "config": [{
             "YouTube_play_speed_mode_01": "2.0",
             "YouTube_play_speed_mode_02": "2.5",
-            "Input_01_single_tap": "Yuyan",
+            "Input_01_single_tap": "CleverType",
             "Input_01_long_tap": "Tasker",
-            "Input_01_double_tap": "CleverType",
+            "Input_01_double_tap": "Yuyan",
             "Input_02_single_tap": "SwiftKey",
             "Input_02_long_tap": "Dictate",
             "Input_02_double_tap": "Yuyan",
