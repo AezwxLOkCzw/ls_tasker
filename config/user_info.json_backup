@@ -1,9 +1,19 @@
 {
+    "Gesture_control_all_bar_names": "0_temp,01__,02__,03__,04__,05__,06__,07__,08__,09__,10__,gc__,test__,input_01,input_02,extend_01,extend_02,extend_03,extend_04,extend_05,extend_06,extend_07",
+    "ChatGPT_mode_speak_write": "口语模式",
+    "ChatGPT_mode_normal_temporary": "正常聊天",
     "tasker_users": [{
         "name": "Lucas",
         "config": [{
             "YouTube_play_speed_mode_01": "2.0",
             "YouTube_play_speed_mode_02": "2.5",
+            "Input_01_single_tap": "CleverType",
+            "Input_01_long_tap": "Tasker",
+            "Input_01_double_tap": "Yuyan",
+            "Input_02_single_tap": "SwiftKey",
+            "Input_02_long_tap": "Dictate",
+            "Input_02_double_tap": "Yuyan",
+            "Yuyan_version": "修改版",
             "GC_09": "enable",
             "Extend_01": "enable",
             "Extend_02": "disable",
@@ -18,6 +28,13 @@
         "config": [{
             "YouTube_play_speed_mode_01": "1.5",
             "YouTube_play_speed_mode_02": "2.0",
+            "Input_01_single_tap": "Yuyan",
+            "Input_01_long_tap": "Tasker",
+            "Input_01_double_tap": "CleverType",
+            "Input_02_single_tap": "SwiftKey",
+            "Input_02_long_tap": "Dictate",
+            "Input_02_double_tap": "Yuyan",
+            "Yuyan_version": "修改版",
             "GC_09": "disable",
             "Extend_01": "enable",
             "Extend_02": "disable",
