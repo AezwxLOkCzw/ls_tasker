@@ -21,7 +21,7 @@
                 "Input_02_long_tap": "Dictate",
                 "Extend_01": "enable",
                 "Extend_02": "disable",
-                "Input_01_single_tap": "Dictate",
+                "Input_01_single_tap": "LazyBoard",
                 "Input_02_double_tap": "Yuyan",
                 "Input_01_long_tap": "Tasker",
                 "Yuyan_version": "修改版"
