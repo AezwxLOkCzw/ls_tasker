@@ -5,8 +5,8 @@
         {
             "name": "Lucas",
             "config": [{
-                "Extend_03": "disable",
-                "Extend_04": "disable",
+                "Extend_03": "enable",
+                "Extend_04": "enable",
                 "YouTube_play_speed_mode_02": "2.5",
                 "YouTube_play_speed_mode_01_revanced": "1.5",
                 "YouTube_play_speed_mode_02_revanced": "1.0",
@@ -20,7 +20,7 @@
                 "Extend_07": "disable",
                 "Input_02_long_tap": "Dictate",
                 "Extend_01": "enable",
-                "Extend_02": "disable",
+                "Extend_02": "enable",
                 "Input_01_single_tap": "LazyBoard",
                 "Input_02_double_tap": "Yuyan",
                 "Input_01_long_tap": "Tasker",
@@ -30,8 +30,8 @@
         {
             "name": "Other",
             "config": [{
-                "Extend_03": "disable",
-                "Extend_04": "disable",
+                "Extend_03": "enable",
+                "Extend_04": "enable",
                 "YouTube_play_speed_mode_02": "2.0",
                 "YouTube_play_speed_mode_01_revanced": "1.5",
                 "YouTube_play_speed_mode_02_revanced": "1.0",
@@ -45,7 +45,7 @@
                 "Extend_07": "disable",
                 "Input_02_long_tap": "Dictate",
                 "Extend_01": "enable",
-                "Extend_02": "disable",
+                "Extend_02": "enable",
                 "Input_01_single_tap": "Yuyan",
                 "Input_02_double_tap": "Yuyan",
                 "Input_01_long_tap": "Tasker",
@@ -55,8 +55,8 @@
         {
             "name": "Betty",
             "config": [{
-                "Extend_03": "disable",
-                "Extend_04": "disable",
+                "Extend_03": "enable",
+                "Extend_04": "enable",
                 "YouTube_play_speed_mode_02": "2.0",
                 "YouTube_play_speed_mode_01_revanced": "1.5",
                 "YouTube_play_speed_mode_02_revanced": "1.0",
@@ -70,7 +70,7 @@
                 "Extend_07": "disable",
                 "Input_02_long_tap": "Dictate",
                 "Extend_01": "enable",
-                "Extend_02": "disable",
+                "Extend_02": "enable",
                 "Input_01_single_tap": "Yuyan",
                 "Input_02_double_tap": "Yuyan",
                 "Input_01_long_tap": "Tasker",
