@@ -7,9 +7,7 @@
             "config": [{
                 "Extend_03": "enable",
                 "Extend_04": "enable",
-                "YouTube_play_speed_mode_02": "2.5",
-                "YouTube_play_speed_mode_01_revanced": "1.5",
-                "YouTube_play_speed_mode_02_revanced": "1.0",
+                "YouTube_play_speed_mode_02": "1.75",
                 "Input_02_single_tap": "SwiftKey",
                 "Open_youtube": "Youtube_revanced",
                 "Extend_05": "disable",
@@ -32,9 +30,7 @@
             "config": [{
                 "Extend_03": "enable",
                 "Extend_04": "enable",
-                "YouTube_play_speed_mode_02": "2.0",
-                "YouTube_play_speed_mode_01_revanced": "1.5",
-                "YouTube_play_speed_mode_02_revanced": "1.0",
+                "YouTube_play_speed_mode_02": "1.0",
                 "Input_02_single_tap": "SwiftKey",
                 "Open_youtube": "Youtube",
                 "Extend_05": "disable",
@@ -57,9 +53,7 @@
             "config": [{
                 "Extend_03": "enable",
                 "Extend_04": "enable",
-                "YouTube_play_speed_mode_02": "2.0",
-                "YouTube_play_speed_mode_01_revanced": "1.5",
-                "YouTube_play_speed_mode_02_revanced": "1.0",
+                "YouTube_play_speed_mode_02": "1.0",
                 "Input_02_single_tap": "SwiftKey",
                 "Open_youtube": "Youtube_revanced",
                 "Extend_05": "disable",
